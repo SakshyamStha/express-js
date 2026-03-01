@@ -1,0 +1,10 @@
+### Test get home page website
+
+Get http://localhost:3000/
+
+
+### Test get dashboard page website
+Get http://localhost:3000/dashboard
+
+### Test get data from api
+Get http://localhost:3000/api/data
