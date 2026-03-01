@@ -8,3 +8,11 @@ Get http://localhost:3000/dashboard
 
 ### Test get data from api
 Get http://localhost:3000/api/data
+
+### Test post data to api
+Post http://localhost:3000/api/data
+Content-Type: application/json
+
+{
+    "name": "Sakshyam"
+}
