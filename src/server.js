@@ -55,6 +55,7 @@
 import express from 'express';
 import path, {dirname} from 'path';
 import { fileURLToPath } from 'url';
+import authRoutes from './routes/authRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -65,6 +66,9 @@ const __filename = fileURLToPath(import.meta.url);
 // get the directory name from the file path
 const __dirname = dirname(__filename);
 
+// middleware
+app.use(express.json());  // for parsing application/json
+
 // for serving static files from the public folder
 app.use(express.static(path.join(__dirname, '../public')));  
 
@@ -74,6 +78,8 @@ app.get('/', (req,res) => {
 })
 
 
+// Routes
+app.use('/auth', authRoutes);
 
 
 app.listen(PORT, () => {
