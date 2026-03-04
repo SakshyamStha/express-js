@@ -6,14 +6,14 @@ import db from '../db.js';
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
-  const { name, email, password } = req.body;
+  const { username, password } = req.body;
 
   const hashedPassword = bcrypt.hashSync(password, 10);
 
   try {
     const result = await db.run(
-      `INSERT INTO users (name, email, password) VALUES (?, ?, ?)`,
-      [name, email, hashedPassword]
+      `INSERT INTO users (username, password) VALUES (?, ?)`,
+      [username, hashedPassword]
     );
 
     const token = jwt.sign(
@@ -31,10 +31,10 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async(req,res) => {
-     const { name, email, password } = req.body;
+     const { username, password } = req.body;
 
      try {
-        const user = await db.get('SELECT * FROM users WHERE email = ?',[email])
+        const user = await db.get('SELECT * FROM users WHERE username = ?',[username])
 
         if(!user){
             return res.status(404).send({message: 'User not found here laa'})
