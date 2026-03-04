@@ -30,7 +30,29 @@ router.post('/register', async (req, res) => {
   }
 });
 
-router.post('/login', (req,res) => {
+router.post('/login', async(req,res) => {
+     const { name, email, password } = req.body;
+
+     try {
+        const user = await db.get('SELECT * FROM users WHERE email = ?',[email])
+
+        if(!user){
+            return res.status(404).send({message: 'User not found here laa'})
+        }
+
+        const validPassword = bcrypt.compareSync(password, user.password)
+        if (!validPassword){
+            return res.status(401).send({message: 'HAHAHA WRONG PASSWORD~~~~~'})
+        }
+
+        console.log(user)
+        const token = jwt.sign({id:user.id}, process.env.JWT_SECRET, {expiresIn: '12h'})
+        res.json({token})
+
+     } catch (error) {
+        console.log(error.message)
+        res.sendStatus(503)
+     }
 
 })
 
