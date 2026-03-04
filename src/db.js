@@ -10,7 +10,8 @@ const db = await open({
 await db.exec(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE,
+    name TEXT,
+    email VARCHAR UNIQUE,
     password TEXT
   );
 `);
