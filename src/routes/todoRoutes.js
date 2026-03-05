@@ -4,9 +4,20 @@ import db from '../db.js';
 const router = express.Router();
 
 // get all todos
-router.get('/', (req,res) => {
+router.get('/', async (req, res) => {
+  try {
+    const todos = await db.all(
+      'SELECT * FROM todos WHERE user_id = ?',
+      [req.userId]
+    );
 
-})
+    return res.json(todos);
+
+  } catch (error) {
+    console.log(error.message);
+    return res.sendStatus(503);
+  }
+});
 
 // create a new todo
 router.post('/', (req,res) => {
